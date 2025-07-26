@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 2D Games Hub</title>
+    <link rel="stylesheet" href="games-style.css">
+</head>
+<body>
+    <header>
+        <h1>🎮 2D Games Hub</h1>
+        <p>Choose your adventure and start playing!</p>
+    </header>
+
+    <nav class="platform-menu">
+        <button class="platform-btn active" onclick="showPlatform('pc')">🖥️ PC Games</button>
+        <button class="platform-btn" onclick="showPlatform('mobile')">📱 Mobile Games</button>
+    </nav>
+
+    <!-- PC Games Menu -->
+    <nav class="game-menu pc-games active" id="pc-menu">
+        <button class="game-btn active" onclick="showGame('snake')">🐍 Snake</button>
+        <button class="game-btn" onclick="showGame('pong')">🏓 Pong</button>
+        <button class="game-btn" onclick="showGame('tetris')">🧩 Tetris</button>
+        <button class="game-btn" onclick="showGame('breakout')">🧱 Breakout</button>
+    </nav>
+
+    <!-- Mobile Games Menu -->
+    <nav class="game-menu mobile-games" id="mobile-menu">
+        <button class="game-btn" onclick="showGame('tic-tac-toe')">⭕ Tic Tac Toe</button>
+        <button class="game-btn" onclick="showGame('tap-game')">👆 Tap Game</button>
+        <button class="game-btn" onclick="showGame('swipe-snake')">🐍 Touch Snake</button>
+        <button class="game-btn" onclick="showGame('memory-game')">🧠 Memory Game</button>
+        <button class="game-btn" onclick="showGame('touch-pong')">🏓 Touch Pong</button>
+    </nav>
+
+    <main>
+        <!-- Snake Game -->
+        <div id="snake-game" class="game-container active">
+            <h2>Snake Game</h2>
+            <div class="game-info">
+                <div class="score">Score: <span id="snake-score">0</span></div>
+                <div class="controls">Use WASD, Arrow Keys, or touch controls</div>
+            </div>
+            <canvas id="snake-canvas" width="400" height="400"></canvas>
+            
+            <!-- Touch Controls for Snake -->
+            <div class="touch-controls snake-controls">
+                <div class="touch-btn" id="up-btn">↑</div>
+                <div class="touch-row">
+                    <div class="touch-btn" id="left-btn">←</div>
+                    <div class="touch-btn" id="right-btn">→</div>
+                </div>
+                <div class="touch-btn" id="down-btn">↓</div>
+            </div>
+            
+            <div class="game-controls">
+                <button class="start-btn" onclick="startSnake()">Start Game</button>
+                <button class="pause-btn" onclick="pauseSnake()" disabled>Pause</button>
+            </div>
+        </div>
+
+        <!-- Pong Game -->
+        <div id="pong-game" class="game-container">
+            <h2>Pong</h2>
+            <div class="game-info">
+                <div class="score">Player: <span id="pong-player-score">0</span> | AI: <span id="pong-ai-score">0</span></div>
+                <div class="controls">Use W/S keys to move paddle</div>
+            </div>
+            <canvas id="pong-canvas" width="600" height="400"></canvas>
+            <div class="game-controls">
+                <button class="start-btn" onclick="startPong()">Start Game</button>
+                <button class="pause-btn" onclick="pausePong()" disabled>Pause</button>
+            </div>
+        </div>
+
+        <!-- Tetris Game -->
+        <div id="tetris-game" class="game-container">
+            <h2>Tetris</h2>
+            <div class="game-info">
+                <div class="score">Score: <span id="tetris-score">0</span></div>
+                <div class="controls">Arrow Keys to move, Space to rotate</div>
+            </div>
+            <canvas id="tetris-canvas" width="300" height="600"></canvas>
+            <div class="game-controls">
+                <button class="start-btn" onclick="startTetris()">Start Game</button>
+                <button class="pause-btn" onclick="pauseTetris()" disabled>Pause</button>
+            </div>
+        </div>
+
+        <!-- Breakout Game -->
+        <div id="breakout-game" class="game-container">
+            <h2>Breakout</h2>
+            <div class="game-info">
+                <div class="score">Score: <span id="breakout-score">0</span></div>
+                <div class="controls">Move mouse to control paddle, click to launch ball</div>
+            </div>
+            <canvas id="breakout-canvas" width="500" height="400"></canvas>
+            <div class="game-controls">
+                <button class="start-btn" onclick="startBreakout()">Start Game</button>
+                <button class="pause-btn" onclick="pauseBreakout()" disabled>Pause</button>
+            </div>
+        </div>
+
+        <!-- Mobile Games -->
+        <!-- Tic Tac Toe Game -->
+        <div id="tic-tac-toe-game" class="game-container">
+            <h2>Tic Tac Toe</h2>
+            <div class="game-info">
+                <div class="score">Player: <span id="tic-tac-current-player">X</span></div>
+                <div class="controls">Tap to place your mark!</div>
+            </div>
+            <div class="tic-tac-toe-board" id="tic-tac-toe-board">
+                <div class="tic-cell" data-index="0"></div>
+                <div class="tic-cell" data-index="1"></div>
+                <div class="tic-cell" data-index="2"></div>
+                <div class="tic-cell" data-index="3"></div>
+                <div class="tic-cell" data-index="4"></div>
+                <div class="tic-cell" data-index="5"></div>
+                <div class="tic-cell" data-index="6"></div>
+                <div class="tic-cell" data-index="7"></div>
+                <div class="tic-cell" data-index="8"></div>
+            </div>
+            <div class="game-controls">
+                <button class="start-btn" onclick="startTicTacToe()">New Game</button>
+                <button class="pause-btn" onclick="resetTicTacToe()">Reset</button>
+            </div>
+        </div>
+
+        Tap Game
+        <div id="tap-game" class="game-container">
+            <h2>Tap Challenge</h2>
+            <div class="game-info">
+                <div class="score">Score: <span id="tap-score">0</span></div>
+                <div class="controls">Tap the circles as fast as you can!</div>
+            </div>
+            <canvas id="tap-canvas" width="350" height="500"></canvas>
+            <div class="game-controls">
+                <button class="start-btn" onclick="startTapGame()">Start Game</button>
+                <button class="pause-btn" onclick="pauseTapGame()" disabled>Pause</button>
+            </div>
+        </div>
+
+        <!-- Touch Snake Game -->
+        <div id="swipe-snake" class="game-container">
+            <h2>Touch Snake</h2>
+            <div class="game-info">
+                <div class="score">Score: <span id="touch-snake-score">0</span></div>
+                <div class="controls">Swipe to change direction</div>
+            </div>
+            <canvas id="touch-snake-canvas" width="350" height="350"></canvas>
+            <div class="touch-controls">
+                <div class="touch-btn" id="up-btn">↑</div>
+                <div class="touch-row">
+                    <div class="touch-btn" id="left-btn">←</div>
+                    <div class="touch-btn" id="right-btn">→</div>
+                </div>
+                <div class="touch-btn" id="down-btn">↓</div>
+            </div>
+            <div class="game-controls">
+                <button class="start-btn" onclick="startTouchSnake()">Start Game</button>
+                <button class="pause-btn" onclick="pauseTouchSnake()" disabled>Pause</button>
+            </div>
+        </div>
+
+        <!-- Memory Game -->
+        <div id="memory-game" class="game-container">
+            <h2>Memory Challenge</h2>
+            <div class="game-info">
+                <div class="score">Score: <span id="memory-score">0</span></div>
+                <div class="controls">Remember the sequence and tap!</div>
+            </div>
+            <div class="memory-grid" id="memory-grid"></div>
+            <div class="game-controls">
+                <button class="start-btn" onclick="startMemoryGame()">Start Game</button>
+                <button class="pause-btn" onclick="pauseMemoryGame()" disabled>Reset</button>
+            </div>
+        </div>
+
+        <!-- Touch Pong -->
+        <div id="touch-pong" class="game-container">
+            <h2>Touch Pong</h2>
+            <div class="game-info">
+                <div class="score">Player: <span id="touch-pong-score">0</span> | AI: <span id="touch-ai-score">0</span></div>
+                <div class="controls">Drag paddle to move</div>
+            </div>
+            <canvas id="touch-pong-canvas" width="350" height="500"></canvas>
+            <div class="game-controls">
+                <button class="start-btn" onclick="startTouchPong()">Start Game</button>
+                <button class="pause-btn" onclick="pauseTouchPong()" disabled>Pause</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Made with ❤️ for gaming enthusiasts</p>
+        <p> -</p>
+        <p> Banti Yadav</p>
+    </footer>
+
+    <script src="games.js"></script>
+</body>
+</html>
